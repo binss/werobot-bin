@@ -5,7 +5,6 @@ import os
 import inspect
 import hashlib
 import logging
-
 from bottle import Bottle, request, response, abort, template
 from six import PY3
 
@@ -243,6 +242,27 @@ class WeRoBot(BaseRoBot):
             raise
         # Bottle是微型Web框架
         app = Bottle()
+
+        # bin add
+        @app.route('/callback/:call_type/:id')
+        def callback(call_type = '',id = '0'):
+            # return 'Hello {}!'.format(open_id)
+            import callback
+            if call_type == 'check_new':
+                callback.checkNewScore(id)
+                return 'done'
+            if call_type == 'check_term':
+                callback.checkTermScore(id)
+                return 'done' 
+            if call_type == 'new_student':
+                callback.newStudentInit(id)
+                return 'done' 
+            return 'fail'
+
+
+
+
+
 
         @app.get('<t:path>')
         def echo(t):
