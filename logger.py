@@ -11,6 +11,8 @@ try:
 except ImportError:
     curses = None
 
+
+# 创建名为WeRoBot的Logger
 logger = logging.getLogger("WeRoBot")
 
 
@@ -33,11 +35,12 @@ def enable_pretty_logging(logger, level='info'):
         channel.setFormatter(_LogFormatter(color=color))
         logger.addHandler(channel)
 
-
+# Logger输出样式，继承了logging.Formatter
 class _LogFormatter(logging.Formatter):
     def __init__(self, color, *args, **kwargs):
         logging.Formatter.__init__(self, *args, **kwargs)
         self._color = color
+        # log是否有颜色
         if color:
             fg_color = (curses.tigetstr("setaf") or
                         curses.tigetstr("setf") or "")
@@ -55,6 +58,7 @@ class _LogFormatter(logging.Formatter):
             }
             self._normal = six.text_type(curses.tigetstr("sgr0"), "ascii")
 
+    # 定义输出格式
     def format(self, record):
         try:
             record.message = record.getMessage()

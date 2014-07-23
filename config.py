@@ -20,7 +20,7 @@ class ConfigAttribute(object):
     def __set__(self, obj, value):
         obj.config[self.__name__] = value
 
-
+# 配置读取类
 class Config(dict):
     def from_pyfile(self, filename):
         """
